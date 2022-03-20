@@ -19,6 +19,7 @@ namespace BankPaymentService.Persistence.Configurations
             builder.Property(p => p.CardNumber).IsRequired().HasMaxLength(20);
             builder.Property(p => p.Cvv).IsRequired();
             builder.Property(p => p.ExpirationDate).IsRequired();
+            builder.Property(p => p.CreatedDate).IsRequired();
             builder.ToTable("PaymentInfos");
         }
     }

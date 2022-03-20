@@ -13,5 +13,6 @@ namespace BankPaymentService.Domain.Entities
         public string CardNumber { get; set; }
         public int Cvv { get; set; }
         public string ExpirationDate { get; set; }
+        public DateTime CreatedDate { get; set; }
     }
 }
