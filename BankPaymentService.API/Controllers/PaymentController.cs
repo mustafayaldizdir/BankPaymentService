@@ -22,7 +22,7 @@ namespace BankPaymentService.API.Controllers
         public async Task<IActionResult> GetPaymentTransactions()
         {
             var payments = await _paymentService.GetAllAsync();
-            return Ok(payments);
+            return CreateActionResultInstance(payments);
         }
 
         [HttpPost]

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using BankPaymentService.Application.Dto;
+using BankPaymentService.Domain.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,5 +10,6 @@ namespace BankPaymentService.Application.Interfaces
 {
     public interface IPaymentProvider
     {
+        Task<Response<CcBinCode>> BankPayment(int cardfirstSixNumber);
     }
 }

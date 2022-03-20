@@ -12,7 +12,7 @@ namespace BankPaymentService.Persistence.Repositories
 {
     public class PaymentInfoRepository : Repository<PaymentInfo>, IPaymentInfoRepository
     {
-        private AppDbContext appDbContext { get => _context as AppDbContext; }
+        private AppDbContext _appDbContext { get => _context as AppDbContext; }
         public PaymentInfoRepository(DbContext context) : base(context)
         {
         }
