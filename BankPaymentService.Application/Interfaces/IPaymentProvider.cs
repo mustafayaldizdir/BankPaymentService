@@ -10,6 +10,6 @@ namespace BankPaymentService.Application.Interfaces
 {
     public interface IPaymentProvider
     {
-        Task<Response<CcBinCode>> BankPayment(int cardfirstSixNumber);
+        Task<Response<CcBinCode>> BankPayment(PaymentInfo paymentInfo);
     }
 }

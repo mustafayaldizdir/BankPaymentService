@@ -9,19 +9,8 @@ using System.Threading.Tasks;
 
 namespace BankPaymentService.Persistence.Services.BankServices
 {
-    public class AkbankService : IPaymentProvider
+    public class AkbankService 
     {
-        private readonly ICcBinCodeRepository _ccBinCodeRepository;
-
-        public AkbankService(ICcBinCodeRepository ccBinCodeRepository)
-        {
-            _ccBinCodeRepository = ccBinCodeRepository;
-        }
-
-        public async Task<Response<CcBinCode>> BankPayment(int cardfirstSixNumber)
-        {
-            var result = await _ccBinCodeRepository.GetBankData(cardfirstSixNumber);
-            return Response<CcBinCode>.Success(result, 200);
-        }
+        
     }
 }

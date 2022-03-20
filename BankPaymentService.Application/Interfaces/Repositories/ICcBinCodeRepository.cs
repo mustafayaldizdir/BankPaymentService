@@ -10,6 +10,6 @@ namespace BankPaymentService.Application.Interfaces
 {
     public interface ICcBinCodeRepository : IRepository<CcBinCode>
     {
-        public Task<CcBinCode> GetBankData(int cardFirstSixNumber);
+        public Task<CcBinCode> GetBankData(string cardFirstSixNumber);
     }
 }

@@ -26,18 +26,8 @@ namespace BankPaymentService.Persistence.Configurations
             builder.Property(p => p.IsActive).IsRequired();
             builder.ToTable("CcBinCodes");
 
-            builder.HasData(SeedLargData());
         }
 
-        public List<CcBinCode> SeedLargData()
-        {
-            var ccBinCodes = new List<CcBinCode>();
-            using (StreamReader r = new StreamReader(@"ccbincodes.json"))
-            {
-                string json = r.ReadToEnd();
-                ccBinCodes = JsonConvert.DeserializeObject<List<CcBinCode>>(json);
-            }
-            return ccBinCodes;
-        }
+        
     }
 }

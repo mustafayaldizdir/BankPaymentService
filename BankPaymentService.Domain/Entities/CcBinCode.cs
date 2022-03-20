@@ -9,7 +9,7 @@ namespace BankPaymentService.Domain.Entities
     public class CcBinCode
     {
         public int Id { get; set; }
-        public int BinCode { get; set; }
+        public string BinCode { get; set; }
         public short BankCode { get; set; }
         public string BankName { get; set; }
         public string CardType { get; set; }

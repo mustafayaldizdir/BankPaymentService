@@ -17,8 +17,7 @@ namespace BankPaymentService.Persistence.Repositories
         public CcBinCodeRepository(DbContext context) : base(context)
         {
         }
-
-        public async Task<CcBinCode> GetBankData(int cardFirstSixNumber)
+        public async Task<CcBinCode> GetBankData(string cardFirstSixNumber)
         {
             var result = _appDbContext.Set<CcBinCode>().Where(x => x.BinCode == cardFirstSixNumber);
 
