@@ -18,6 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\BankPaymentService.Application\BankPaymentService.Application.csproj" />
     <ProjectReference Include="..\BankPaymentService.Domain\BankPaymentService.Domain.csproj" />
   </ItemGroup>
 
