@@ -1,4 +1,5 @@
 ﻿using BankPaymentService.Application.Dto;
+using BankPaymentService.Application.Dto.PaymentInfo;
 using BankPaymentService.Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ namespace BankPaymentService.Application.Interfaces.Services
 {
     public  interface IPaymentService
     {
-        Task<Response<PaymentInfo>> CreateAsync(PaymentInfo entity);
+        Task<Response<PaymentInfoDto>> CreateAsync(PaymentInfoDto entity);
         Task<Response<IEnumerable<PaymentInfo>>> GetAllAsync();
     }
 }

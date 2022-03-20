@@ -1,4 +1,6 @@
-﻿using BankPaymentService.Application.Dto;
+﻿using AutoMapper;
+using BankPaymentService.Application.Dto;
+using BankPaymentService.Application.Dto.PaymentInfo;
 using BankPaymentService.Application.Interfaces;
 using BankPaymentService.Application.Interfaces.Services;
 using BankPaymentService.Domain.Entities;
@@ -14,16 +16,20 @@ namespace BankPaymentService.Persistence.Services
     {
         private readonly IUnitOfWork _unitOfWork;
 
-        public PaymentService(IUnitOfWork unitOfWork)
+        private readonly IMapper _mapper;
+
+        public PaymentService(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
+            _mapper = mapper;
         }
 
-        public async Task<Response<PaymentInfo>> CreateAsync(PaymentInfo entity)
+        public async Task<Response<PaymentInfoDto>> CreateAsync(PaymentInfoDto paymentInfoDto)
         {
+            var entity =  _mapper.Map<PaymentInfo>(paymentInfoDto);
             await _unitOfWork.PaymentInfos.AddAsync(entity);
             await _unitOfWork.CommitAsync();
-            return Response<PaymentInfo>.Success(entity, 200);
+            return Response<PaymentInfoDto>.Success(_mapper.Map<PaymentInfoDto>(entity), 200);
         }
 
         public async Task<Response<IEnumerable<PaymentInfo>>> GetAllAsync()
