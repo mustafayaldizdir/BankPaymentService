@@ -11,15 +11,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastru
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{312C797C-3EF1-4B87-8724-229847F1C149}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BankPaymentService.Application", "BankPaymentService.Application\BankPaymentService.Application.csproj", "{6A54FE80-275A-4571-B66E-106438A3C8B7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BankPaymentService.Application", "BankPaymentService.Application\BankPaymentService.Application.csproj", "{6A54FE80-275A-4571-B66E-106438A3C8B7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BankPaymentService.Domain", "BankPaymentService.Domain\BankPaymentService.Domain.csproj", "{16B110F6-9AFB-439E-9887-DCC438DE371F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BankPaymentService.Domain", "BankPaymentService.Domain\BankPaymentService.Domain.csproj", "{16B110F6-9AFB-439E-9887-DCC438DE371F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BankPaymentService.Infrastructure", "BankPaymentService.Infrastructure\BankPaymentService.Infrastructure.csproj", "{F8947C0C-E733-4499-A588-56DEAC6CEEBC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BankPaymentService.Infrastructure", "BankPaymentService.Infrastructure\BankPaymentService.Infrastructure.csproj", "{F8947C0C-E733-4499-A588-56DEAC6CEEBC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BankPaymentService.Persistence", "BankPaymentService.Persistence\BankPaymentService.Persistence.csproj", "{78577D9A-B41C-43B6-97F7-D9F1B650CC90}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BankPaymentService.Persistence", "BankPaymentService.Persistence\BankPaymentService.Persistence.csproj", "{78577D9A-B41C-43B6-97F7-D9F1B650CC90}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BankPaymentService.API", "BankPaymentService.API\BankPaymentService.API.csproj", "{2AB44B93-2863-4702-93FD-F2549F30F010}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BankPaymentService.API", "BankPaymentService.API\BankPaymentService.API.csproj", "{2AB44B93-2863-4702-93FD-F2549F30F010}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
