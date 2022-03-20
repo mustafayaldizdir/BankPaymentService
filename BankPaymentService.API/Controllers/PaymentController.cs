@@ -1,5 +1,6 @@
 ﻿using BankPaymentService.Application.ControllerBases;
 using BankPaymentService.Application.Dto.PaymentInfo;
+using BankPaymentService.Application.Interfaces;
 using BankPaymentService.Application.Interfaces.Services;
 using BankPaymentService.Domain.Entities;
 using Microsoft.AspNetCore.Http;
@@ -12,10 +13,12 @@ namespace BankPaymentService.API.Controllers
     public class PaymentController : CustomControllerBase
     {
         private readonly IPaymentService _paymentService;
+        private readonly IBankFactory _bankFactory;
 
-        public PaymentController(IPaymentService paymentService)
+        public PaymentController(IPaymentService paymentService, IBankFactory bankFactory)
         {
             _paymentService = paymentService;
+            _bankFactory = bankFactory;
         }
 
         [HttpGet]
@@ -28,7 +31,7 @@ namespace BankPaymentService.API.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(PaymentInfoDto paymentInfoDto)
         {
-            var response = await _paymentService.CreateAsync(paymentInfoDto);
+            var response = await _bankFactory.Payment(paymentInfoDto);
             return CreateActionResultInstance(response);
         }
     }

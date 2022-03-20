@@ -9,6 +9,7 @@ namespace BankPaymentService.Application.Dto.PaymentInfo
     public class PaymentInfoDto
     {
         public string Name { get; set; }
+        public int BankId { get; set; }
         public string CardNumber { get; set; }
         public int Cvv { get; set; }
         public string ExpirationDate { get; set; }

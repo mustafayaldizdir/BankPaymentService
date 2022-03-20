@@ -24,12 +24,12 @@ namespace BankPaymentService.Persistence.Services
             _mapper = mapper;
         }
 
-        public async Task<Response<PaymentInfoDto>> CreateAsync(PaymentInfoDto paymentInfoDto)
+        public async Task<Response<PaymentInfo>> CreateAsync(PaymentInfoDto paymentInfoDto)
         {
             var entity =  _mapper.Map<PaymentInfo>(paymentInfoDto);
             await _unitOfWork.PaymentInfos.AddAsync(entity);
             await _unitOfWork.CommitAsync();
-            return Response<PaymentInfoDto>.Success(_mapper.Map<PaymentInfoDto>(entity), 200);
+            return Response<PaymentInfo>.Success(_mapper.Map<PaymentInfo>(entity), 200);
         }
 
         public async Task<Response<IEnumerable<PaymentInfo>>> GetAllAsync()

@@ -39,7 +39,6 @@ namespace BankPaymentService.Persistence.Repositories
             return await _dbSet.ToListAsync();
         }
 
-
         public async Task<T> GetByIdAsync(int id)
         {
             return await _dbSet.FindAsync(id);
@@ -64,6 +63,10 @@ namespace BankPaymentService.Persistence.Repositories
         public IQueryable<T> Where(Expression<Func<T, bool>> expression)
         {
             return _dbSet.Where(expression);
+        }
+        public async Task<T> GetAsync(Expression<Func<T, bool>> expression)
+        {
+            return await _dbSet.FirstOrDefaultAsync(expression);
         }
     }
 }

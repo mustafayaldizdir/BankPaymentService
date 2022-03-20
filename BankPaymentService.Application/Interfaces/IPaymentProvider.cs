@@ -1,4 +1,5 @@
 ﻿using BankPaymentService.Application.Dto;
+using BankPaymentService.Application.Dto.PaymentInfo;
 using BankPaymentService.Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,6 @@ namespace BankPaymentService.Application.Interfaces
 {
     public interface IPaymentProvider
     {
-        Task<Response<CcBinCode>> BankPayment(PaymentInfo paymentInfo);
+        Task<Response<PaymentInfo>> BankPayment(PaymentInfoDto paymentInfoDto);
     }
 }

@@ -19,6 +19,7 @@ namespace BankPaymentService.Application.Interfaces
         T Update(T entity);
         void Remove(T entity);
         void RemoveRange(IEnumerable<T> entities);
+        Task<T> GetAsync(Expression<Func<T, bool>> expression);
 
     }
 }
