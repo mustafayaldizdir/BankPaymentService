@@ -11,20 +11,19 @@ using System.Threading.Tasks;
 
 namespace BankPaymentService.Persistence.Services.BankServices
 {
-    public class BurganBankService : IPaymentProvider
+    public class BurganBankService : PaymentProvider
     {
-        private readonly IPaymentService _paymentService;
+        public BurganBankService(IPaymentService paymentService) : base(paymentService) { }
 
-        public BurganBankService(IPaymentService paymentService)
+        /// <summary>
+        /// If bank payment transaction has a custom payment development configuration 
+        /// </summary>
+        /// <param name="paymentInfoDto"></param>
+        /// <returns></returns>
+        public override async Task<Response<PaymentInfo>> BankPayment(PaymentInfoDto paymentInfoDto)
         {
-            _paymentService = paymentService;
+            return await paymentService.CreateAsync(paymentInfoDto);
         }
 
-        public async Task<Response<PaymentInfo>> BankPayment(PaymentInfoDto paymentInfoDto)
-        {
-            var result = await _paymentService.CreateAsync(paymentInfoDto);
-            return result;
-
-        }
     }
 }

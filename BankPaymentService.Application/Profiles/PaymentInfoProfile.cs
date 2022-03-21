@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using BankPaymentService.Application.Dto;
 using BankPaymentService.Application.Dto.PaymentInfo;
 using BankPaymentService.Domain.Entities;
 using System;
@@ -14,6 +15,8 @@ namespace BankPaymentService.Application.Profiles
         public PaymentInfoProfile()
         {
             CreateMap<PaymentInfo, PaymentInfoDto>().ReverseMap();
+            CreateMap<PaymentInfo, PaymentTransaction>().ReverseMap();
+            CreateMap<PaymentInfoDto, PaymentInfoInput>().ReverseMap();
         }
     }
 }

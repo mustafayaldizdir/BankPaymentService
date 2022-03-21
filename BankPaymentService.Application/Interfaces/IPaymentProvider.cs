@@ -12,5 +12,6 @@ namespace BankPaymentService.Application.Interfaces
     public interface IPaymentProvider
     {
         Task<Response<PaymentInfo>> BankPayment(PaymentInfoDto paymentInfoDto);
+      
     }
 }

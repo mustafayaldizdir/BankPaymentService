@@ -3,17 +3,12 @@ using BankPaymentService.Application.Dto.PaymentInfo;
 using BankPaymentService.Application.Interfaces;
 using BankPaymentService.Application.Interfaces.Services;
 using BankPaymentService.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BankPaymentService.Persistence.Services.BankServices
 {
-    public class AnadoluBankService : PaymentProvider
+    public class HalkBankService : PaymentProvider
     {
-        public AnadoluBankService(IPaymentService paymentService) : base(paymentService) { }
+        public HalkBankService(IPaymentService paymentService) : base(paymentService) { }
 
         /// <summary>
         /// If bank payment transaction has a custom payment development configuration 
@@ -22,7 +17,7 @@ namespace BankPaymentService.Persistence.Services.BankServices
         /// <returns></returns>
         public override async Task<Response<PaymentInfo>> BankPayment(PaymentInfoDto paymentInfoDto)
         {
-            return await paymentService.CreateAsync(paymentInfoDto);
+          return await paymentService.CreateAsync(paymentInfoDto);
         }
 
     }

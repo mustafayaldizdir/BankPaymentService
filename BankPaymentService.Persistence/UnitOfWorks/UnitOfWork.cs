@@ -29,7 +29,15 @@ namespace BankPaymentService.Persistence.UnitOfWorks
 
         public async Task CommitAsync()
         {
-           await _context.SaveChangesAsync();
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+
+            }
+           
         }
     }
 }

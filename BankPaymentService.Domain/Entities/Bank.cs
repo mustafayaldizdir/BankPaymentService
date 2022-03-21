@@ -12,6 +12,5 @@ namespace BankPaymentService.Domain.Entities
         public string Name { get; set; }
         public int BankCode { get; set; }
 
-        public virtual ICollection<PaymentInfo> PaymentInfos { get; set; }
     }
 }

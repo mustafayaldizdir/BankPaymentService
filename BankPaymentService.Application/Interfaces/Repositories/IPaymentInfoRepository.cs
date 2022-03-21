@@ -1,4 +1,5 @@
-﻿using BankPaymentService.Domain.Entities;
+﻿using BankPaymentService.Application.Dto;
+using BankPaymentService.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,5 +10,6 @@ namespace BankPaymentService.Application.Interfaces
 {
     public interface IPaymentInfoRepository : IRepository<PaymentInfo>
     {
+        public Task<List<PaymentInfo>> GetPaymentTransactionsAsync();
     }
 }

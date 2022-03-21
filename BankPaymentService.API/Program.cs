@@ -1,8 +1,11 @@
+using BankPaymentService.Application.Dto.PaymentInfo;
 using BankPaymentService.Application.Interfaces;
+using BankPaymentService.Application.Interfaces.Repositories;
 using BankPaymentService.Application.Interfaces.Services;
 using BankPaymentService.Application.Validators;
 using BankPaymentService.Domain.Entities;
 using BankPaymentService.Persistence;
+using BankPaymentService.Persistence.Factory;
 using BankPaymentService.Persistence.Repositories;
 using BankPaymentService.Persistence.Services;
 using BankPaymentService.Persistence.UnitOfWorks;
@@ -32,13 +35,17 @@ options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddTransient<ICcBinCodeRepository, CcBinCodeRepository>();
 builder.Services.AddTransient<IPaymentInfoRepository, PaymentInfoRepository>();
+builder.Services.AddTransient<IBankRepository, BankRepository>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddTransient<IBinCodeService, BinCodeService>();
 builder.Services.AddTransient<IPaymentService, PaymentService>();
 builder.Services.AddScoped<DbContext>(provider => provider.GetService<AppDbContext>());
-
-builder.Services.AddTransient<IValidator<PaymentInfo>, PaymentInfoValidator>();
+builder.Services.AddTransient<IBankFactory, BankFactory>();
+builder.Services.AddTransient<IValidator<PaymentInfoInput>, PaymentInfoValidator>();
 builder.Services.AddTransient<IValidator<Bank>, BankValidator>();
+
+
+
 
 var app = builder.Build();
 

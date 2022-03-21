@@ -37,6 +37,12 @@ namespace BankPaymentService.Persistence.Services
             var result = await _unitOfWork.PaymentInfos.GetAllAsync();
             return Response<IEnumerable<PaymentInfo>>.Success(result, 200);
         }
+        public async Task<Response<List<PaymentTransaction>>> GetAllTransactionAsync()
+        {
+            var result = await _unitOfWork.PaymentInfos.GetPaymentTransactionsAsync();
+            return Response<List<PaymentTransaction>>.Success(_mapper.Map<List<PaymentTransaction>>(result), 200);
+        }
+
 
     }
 }

@@ -11,20 +11,19 @@ using System.Threading.Tasks;
 
 namespace BankPaymentService.Persistence.Services.BankServices
 {
-    public class FibaBankService : IPaymentProvider
+    public class FibaBankService : PaymentProvider
     {
-        private readonly IPaymentService _paymentService;
+        public FibaBankService(IPaymentService paymentService) : base(paymentService) { }
 
-        public FibaBankService(IPaymentService paymentService)
+        /// <summary>
+        /// If bank payment transaction has a custom payment development configuration 
+        /// </summary>
+        /// <param name="paymentInfoDto"></param>
+        /// <returns></returns>
+        public override async Task<Response<PaymentInfo>> BankPayment(PaymentInfoDto paymentInfoDto)
         {
-            _paymentService = paymentService;
+            return await paymentService.CreateAsync(paymentInfoDto);
         }
 
-        public async Task<Response<PaymentInfo>> BankPayment(PaymentInfoDto paymentInfoDto)
-        {
-            var result = await _paymentService.CreateAsync(paymentInfoDto);
-            return result;
-
-        }
     }
 }

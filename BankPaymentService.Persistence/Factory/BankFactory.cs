@@ -1,11 +1,11 @@
 ﻿using BankPaymentService.Application.Dto;
 using BankPaymentService.Application.Dto.PaymentInfo;
 using BankPaymentService.Application.Interfaces;
-using BankPaymentService.Application.Interfaces.Banks;
 using BankPaymentService.Application.Interfaces.Repositories;
 using BankPaymentService.Domain.Entities;
 using BankPaymentService.Infrastructure.Enum;
 using BankPaymentService.Persistence.Services.BankServices;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,120 +16,115 @@ namespace BankPaymentService.Persistence.Factory
 {
     public class BankFactory : IBankFactory
     {
+        private readonly IServiceProvider _serviceProvider;
         private readonly ICcBinCodeRepository _ccBinCodeRepository;
         private readonly IBankRepository _bankRepository;
-        private readonly IAkbankService _akbankService;
 
         public BankFactory(
             ICcBinCodeRepository ccBinCodeRepository,
-            IBankRepository bankRepository, IAkbankService akbankService)
+            IBankRepository bankRepository,
+            IServiceProvider serviceProvider)
         {
             _ccBinCodeRepository = ccBinCodeRepository;
             _bankRepository = bankRepository;
-            _akbankService = akbankService;
+            _serviceProvider = serviceProvider;
         }
 
-
-
-        public async Task<Response<PaymentInfo>> Payment(PaymentInfoDto paymentInfoDto)
+        public IPaymentProvider Create(PaymentInfoDto paymentInfoDto)
         {
-
-            var ccBinCode =  _ccBinCodeRepository.GetBankData(paymentInfoDto.CardNumber.Substring(0,5)).Result;
-            var bank =  _bankRepository.GetAsync(x => x.BankCode == ccBinCode.BankCode).Result;
-
-
-            var response = new Response<PaymentInfo>();
-            switch (bank.BankCode)
+            var ccBinCode = _ccBinCodeRepository.GetBankData(paymentInfoDto.CardNumber.Substring(0, 6)).Result;
+            var bank = _bankRepository.GetAsync(x => x.BankCode == ccBinCode.BankCode).Result;
+            paymentInfoDto.BankId = bank.Id;
+            paymentInfoDto.CreatedDate = DateTime.UtcNow;
+            switch ((BankName)bank.BankCode)
             {
-                case (int)BankName.ZiraatBankService:
-                    break;
-                case (int)BankName.HalkBankService:
-                    break;
-                case (int)BankName.VakifBankService:
-                    break;
-                case (int)BankName.TurkEkonomiBankService:
-                    break;
-                case (int)BankName.AkbankService:
-                   response = await _akbankService.BankPayment(paymentInfoDto);
-                    break;
-                case (int)BankName.SekerBankService:
-                    break;
-                case (int)BankName.GarantiBankService:
-                    break;
-                case (int)BankName.IsBankService:
-                    break;
-                case (int)BankName.YapiKrediBankService:
-                    break;
-                case (int)BankName.CitiBankService:
-                    break;
-                case (int)BankName.TurkishBankService:
-                    break;
-                case (int)BankName.IngBankService:
-                    break;
-                case (int)BankName.FibaBankService:
-                    break;
-                case (int)BankName.TurklandBankService:
-                    break;
-                case (int)BankName.IcbcTurkeyBankService:
-                    break;
-                case (int)BankName.QnbFinansBankService:
-                    break;
-                case (int)BankName.HsbcBankService:
-                    break;
-                case (int)BankName.AlternatifBankService:
-                    break;
-                case (int)BankName.BurganBankService:
-                    break;
-                case (int)BankName.DenizBankService:
-                    break;
-                case (int)BankName.AnadoluBankService:
-                    break;
-                case (int)BankName.AktifYatirimBankService:
-                    break;
-                case (int)BankName.OdeaBankService:
-                    break;
-                case (int)BankName.GoldenGlobalYatirimBankService:
-                    break;
-                case (int)BankName.AlbarakaTurkKatilimBankService:
-                    break;
-                case (int)BankName.KuveytTurkKatilimBankService:
-                    break;
-                case (int)BankName.FinansKatilimBankService:
-                    break;
-                case (int)BankName.ZiraatKatilimBankService:
-                    break;
-                case (int)BankName.VakifKatilimBankService:
-                    break;
-                case (int)BankName.TurkiyeEmlakKatilimBankService:
-                    break;
-                case (int)BankName.OzanElektronikParaBankService:
-                    break;
-                case (int)BankName.IyziOdemeVeElektronikParaBankService:
-                    break;
-                case (int)BankName.TtOdemeVeElektronikParaBankService:
-                    break;
-                case (int)BankName.LydiansElektronikParaBankService:
-                    break;
-                case (int)BankName.PaycoreBankService:
-                    break;
-                case (int)BankName.TurkElektronikParaBankService:
-                    break;
-                case (int)BankName.PaparaElektronikParaBankService:
-                    break;
-                case (int)BankName.PostaVeTelgrafTeskilatiBankService:
-                    break;
-                case (int)BankName.IninalBankService:
-                    break;
-                case (int)BankName.TurkcellBankService:
-                    break;
-                case (int)BankName.PaladyumBankService:
-                    break;
+                case BankName.ZiraatBankService:
+                    return ActivatorUtilities.GetServiceOrCreateInstance<ZiraatBankService>(_serviceProvider);
+                case BankName.HalkBankService:
+                    return ActivatorUtilities.GetServiceOrCreateInstance<HalkBankService>(_serviceProvider);
+                case BankName.VakifBankService:
+                    return ActivatorUtilities.GetServiceOrCreateInstance<VakifBankService>(_serviceProvider);
+                case BankName.TurkEkonomiBankService:
+                    return ActivatorUtilities.GetServiceOrCreateInstance<TurkEkonomiBankService>(_serviceProvider);
+                case BankName.AkbankService:
+                    return ActivatorUtilities.GetServiceOrCreateInstance<AkbankService>(_serviceProvider);
+                case BankName.SekerBankService:
+                    return ActivatorUtilities.GetServiceOrCreateInstance<SekerBankService>(_serviceProvider);
+                case BankName.GarantiBankService: 
+                    return ActivatorUtilities.GetServiceOrCreateInstance<GarantiBankService>(_serviceProvider);
+                case BankName.IsBankService: 
+                    return ActivatorUtilities.GetServiceOrCreateInstance<IsBankService>(_serviceProvider);
+                case BankName.YapiKrediBankService: 
+                    return ActivatorUtilities.GetServiceOrCreateInstance<YapiKrediBankService>(_serviceProvider);
+                case BankName.CitiBankService: 
+                    return ActivatorUtilities.GetServiceOrCreateInstance<CitiBankService>(_serviceProvider);
+                case BankName.TurkishBankService: 
+                    return ActivatorUtilities.GetServiceOrCreateInstance<TurkishBankService>(_serviceProvider);
+                case BankName.IngBankService: 
+                    return ActivatorUtilities.GetServiceOrCreateInstance<IngBankService>(_serviceProvider);
+                case BankName.FibaBankService: 
+                    return ActivatorUtilities.GetServiceOrCreateInstance<FibaBankService>(_serviceProvider);
+                case BankName.TurklandBankService: 
+                    return ActivatorUtilities.GetServiceOrCreateInstance<TurklandBankService>(_serviceProvider);
+                case BankName.IcbcTurkeyBankService:
+                    return ActivatorUtilities.GetServiceOrCreateInstance<IcbcTurkeyBankService>(_serviceProvider);
+                case BankName.QnbFinansBankService: 
+                    return ActivatorUtilities.GetServiceOrCreateInstance<QnbFinansBankService>(_serviceProvider);
+                case BankName.HsbcBankService: 
+                    return ActivatorUtilities.GetServiceOrCreateInstance<HsbcBankService>(_serviceProvider);
+                case BankName.AlternatifBankService: 
+                    return ActivatorUtilities.GetServiceOrCreateInstance<AlternatifBankService>(_serviceProvider);
+                case BankName.BurganBankService: 
+                    return ActivatorUtilities.GetServiceOrCreateInstance<BurganBankService>(_serviceProvider);
+                case BankName.DenizBankService: 
+                    return ActivatorUtilities.GetServiceOrCreateInstance<DenizBankService>(_serviceProvider);
+                case BankName.AnadoluBankService: 
+                    return ActivatorUtilities.GetServiceOrCreateInstance<AnadoluBankService>(_serviceProvider);
+                case BankName.AktifYatirimBankService: 
+                    return ActivatorUtilities.GetServiceOrCreateInstance<AktifYatirimBankService>(_serviceProvider);
+                case BankName.OdeaBankService: 
+                    return ActivatorUtilities.GetServiceOrCreateInstance<OdeaBankService>(_serviceProvider);
+                case BankName.GoldenGlobalYatirimBankService: 
+                    return ActivatorUtilities.GetServiceOrCreateInstance<GoldenGlobalYatirimBankService>(_serviceProvider);
+                case BankName.AlbarakaTurkKatilimBankService: 
+                    return ActivatorUtilities.GetServiceOrCreateInstance<AlbarakaTurkKatilimBankService>(_serviceProvider);
+                case BankName.KuveytTurkKatilimBankService: 
+                    return ActivatorUtilities.GetServiceOrCreateInstance<KuveytTurkKatilimBankService>(_serviceProvider);
+                case BankName.FinansKatilimBankService: 
+                    return ActivatorUtilities.GetServiceOrCreateInstance<FinansKatilimBankService>(_serviceProvider);
+                case BankName.ZiraatKatilimBankService: 
+                    return ActivatorUtilities.GetServiceOrCreateInstance<ZiraatKatilimBankService>(_serviceProvider);
+                case BankName.VakifKatilimBankService: 
+                    return ActivatorUtilities.GetServiceOrCreateInstance<VakifKatilimBankService>(_serviceProvider);
+                case BankName.TurkiyeEmlakKatilimBankService: 
+                    return ActivatorUtilities.GetServiceOrCreateInstance<TurkiyeEmlakKatilimBankService>(_serviceProvider);
+                case BankName.OzanElektronikParaBankService: 
+                    return ActivatorUtilities.GetServiceOrCreateInstance<OzanElektronikParaBankService>(_serviceProvider);
+                case BankName.IyziOdemeVeElektronikParaBankService: 
+                    return ActivatorUtilities.GetServiceOrCreateInstance<IyziOdemeVeElektronikParaBankService>(_serviceProvider);
+                case BankName.TtOdemeVeElektronikParaBankService: 
+                    return ActivatorUtilities.GetServiceOrCreateInstance<TtOdemeVeElektronikParaBankService>(_serviceProvider);
+                case BankName.LydiansElektronikParaBankService: 
+                    return ActivatorUtilities.GetServiceOrCreateInstance<LydiansElektronikParaBankService>(_serviceProvider);
+                case BankName.PaycoreBankService: 
+                    return ActivatorUtilities.GetServiceOrCreateInstance<PaycoreBankService>(_serviceProvider);
+                case BankName.TurkElektronikParaBankService: 
+                    return ActivatorUtilities.GetServiceOrCreateInstance<TurkElektronikParaBankService>(_serviceProvider);
+                case BankName.PaparaElektronikParaBankService: 
+                    return ActivatorUtilities.GetServiceOrCreateInstance<PaparaElektronikParaBankService>(_serviceProvider);
+                case BankName.PostaVeTelgrafTeskilatiBankService: 
+                    return ActivatorUtilities.GetServiceOrCreateInstance<PostaVeTelgrafTeskilatiBankService>(_serviceProvider);
+                case BankName.IninalBankService: 
+                    return ActivatorUtilities.GetServiceOrCreateInstance<IninalBankService>(_serviceProvider);
+                case BankName.TurkcellBankService: 
+                    return ActivatorUtilities.GetServiceOrCreateInstance<TurkcellBankService>(_serviceProvider);
+                case BankName.PaladyumBankService: 
+                    return ActivatorUtilities.GetServiceOrCreateInstance<PaladyumBankService>(_serviceProvider);
                 default:
-                    break;
+                    return null;
+
 
             }
-
-            return paymentProvider;
         }
     }
 }

@@ -1,31 +1,24 @@
 ﻿using BankPaymentService.Application.Dto;
 using BankPaymentService.Application.Dto.PaymentInfo;
 using BankPaymentService.Application.Interfaces;
-using BankPaymentService.Application.Interfaces.Banks;
-using BankPaymentService.Application.Interfaces.Repositories;
 using BankPaymentService.Application.Interfaces.Services;
 using BankPaymentService.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BankPaymentService.Persistence.Services.BankServices
 {
-    public class AkbankService : IAkbankService
+    public class AkbankService : PaymentProvider
     {
-        private readonly IPaymentService _paymentService;
-        public AkbankService(IPaymentService paymentService)
+        public AkbankService(IPaymentService paymentService) : base(paymentService) { }
+
+        /// <summary>
+        /// If bank payment transaction has a custom payment development configuration 
+        /// </summary>
+        /// <param name="paymentInfoDto"></param>
+        /// <returns></returns>
+        public override async Task<Response<PaymentInfo>> BankPayment(PaymentInfoDto paymentInfoDto)
         {
-            _paymentService = paymentService;
+            return await paymentService.CreateAsync(paymentInfoDto);
         }
 
-        public async Task<Response<PaymentInfo>> BankPayment(PaymentInfoDto paymentInfoDto)
-        {
-            var result = await _paymentService.CreateAsync(paymentInfoDto);
-            return result;
-
-        }
     }
 }

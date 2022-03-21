@@ -6,13 +6,11 @@ using System.Threading.Tasks;
 
 namespace BankPaymentService.Application.Dto.PaymentInfo
 {
-    public class PaymentInfoDto
+    public class PaymentInfoInput
     {
         public string Name { get; set; }
         public string CardNumber { get; set; }
-        public int BankId { get; set; }
         public int Cvv { get; set; }
         public string ExpirationDate { get; set; }
-        public DateTime CreatedDate { get; set; }
     }
 }

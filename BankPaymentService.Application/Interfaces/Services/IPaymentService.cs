@@ -13,5 +13,6 @@ namespace BankPaymentService.Application.Interfaces.Services
     {
         Task<Response<PaymentInfo>> CreateAsync(PaymentInfoDto entity);
         Task<Response<IEnumerable<PaymentInfo>>> GetAllAsync();
+        Task<Response<List<PaymentTransaction>>> GetAllTransactionAsync();
     }
 }

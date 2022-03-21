@@ -12,6 +12,7 @@ namespace BankPaymentService.Application.Interfaces
 {
     public interface IBankFactory
     {
-        Task<Response<PaymentInfo>> Payment(PaymentInfoDto paymentInfoDto);
+        IPaymentProvider Create(PaymentInfoDto paymentInfoDto);
+
     }
 }
