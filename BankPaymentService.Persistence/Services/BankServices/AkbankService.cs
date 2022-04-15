@@ -8,7 +8,10 @@ namespace BankPaymentService.Persistence.Services.BankServices
 {
     public class AkbankService : PaymentProvider
     {
-        public AkbankService(IPaymentService paymentService) : base(paymentService) { }
+        public AkbankService(IPaymentService paymentService) : base(paymentService) 
+        { 
+
+        }
 
         /// <summary>
         /// If bank payment transaction has a custom payment development configuration 

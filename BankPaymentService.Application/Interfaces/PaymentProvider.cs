@@ -21,8 +21,7 @@ namespace BankPaymentService.Application.Interfaces
 
         public virtual async Task<Response<PaymentInfo>> BankPayment(PaymentInfoDto paymentInfoDto)
         {
-           return await  paymentService.CreateAsync(paymentInfoDto) ;
+           return await  paymentService.CreateAsync(paymentInfoDto);
         } 
-    
     }
 }

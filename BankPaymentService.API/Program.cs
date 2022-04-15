@@ -24,6 +24,10 @@ builder.Services.AddControllers().AddFluentValidation(options =>
     options.ImplicitlyValidateRootCollectionElements = true;
     options.RegisterValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 });
+builder.Services.AddStackExchangeRedisCache(options =>
+{
+    options.Configuration = "localhost:6379";
+});
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -43,7 +47,7 @@ builder.Services.AddScoped<DbContext>(provider => provider.GetService<AppDbConte
 builder.Services.AddTransient<IBankFactory, BankFactory>();
 builder.Services.AddTransient<IValidator<PaymentInfoInput>, PaymentInfoValidator>();
 builder.Services.AddTransient<IValidator<Bank>, BankValidator>();
-
+builder.Services.AddSingleton<IRedisService,RedisService>();
 
 
 
@@ -59,7 +63,6 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
-
 app.MapControllers();
 
 app.Run();
