@@ -20,6 +20,7 @@ namespace BankPaymentService.Test
     {
         private readonly Mock<IBankFactory> _mockBankFactory;
         private readonly Mock<IPaymentService> _mockPaymentService;
+        private readonly Mock<IRedisService>_redisService;
         private readonly AutoMapper.IMapper _mockMapper; 
         private readonly PaymentController _controller;
 
@@ -29,13 +30,14 @@ namespace BankPaymentService.Test
         {
             _mockPaymentService = new Mock<IPaymentService>();
             _mockBankFactory = new Mock<IBankFactory>();
+            _redisService = new Mock<IRedisService>();
             //auto mapper configuration
             var mockMapper = new MapperConfiguration(cfg =>
             {
                 cfg.AddProfile(new PaymentInfoProfile());
             });
            _mockMapper= mockMapper.CreateMapper();
-            _controller = new PaymentController(_mockPaymentService.Object,_mockBankFactory.Object, _mockMapper);
+            _controller = new PaymentController(_mockPaymentService.Object,_mockBankFactory.Object, _mockMapper, _redisService.Object);
 
             _paymentTransactions = new List<PaymentTransaction>()
             {

@@ -1,11 +1,7 @@
 ﻿using BankPaymentService.Application.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace BankPaymentService.Persistence.Repositories
 {
@@ -41,7 +37,7 @@ namespace BankPaymentService.Persistence.Repositories
 
         public async Task<T> GetByIdAsync(int id)
         {
-            return await _dbSet.FindAsync(id);
+            return await _dbSet.FindAsync(id) ?? Activator.CreateInstance<T>();
         }
 
         public void Remove(T entity)
@@ -66,7 +62,7 @@ namespace BankPaymentService.Persistence.Repositories
         }
         public async Task<T> GetAsync(Expression<Func<T, bool>> expression)
         {
-            return await _dbSet.FirstOrDefaultAsync(expression);
+            return await _dbSet.FirstOrDefaultAsync(expression) ?? Activator.CreateInstance<T>();
         }
     }
 }
